@@ -23,7 +23,7 @@ class Person:
             'study': np.random.choice(a=[True, False], p=PROBABILITY_STUDY),
             'Spend Money': random.choice(SPEND_MONEY_PERCENTAGE),
             'baby': np.random.choice(a=[True, False], p=PROBABILITY_HAVE_CHILDREN),
-            'Die Accident':  np.random.choice(a=[True, False], p=PROBABILITY_DIE_ACCIDENT),
+            'Premature Die':  np.random.choice(a=[True, False], p=PROBABILITY_DIE_ACCIDENT),
             'Invest': np.random.choice(a=[True, False], p=PROBABILITY_INVEST)
         }
         self.invest_percentage = np.random.uniform(0.05, 0.2, size=1)[0]
@@ -104,7 +104,7 @@ class Person:
             for child in self.children:
                 child.money += heritage_value
 
-        if self.genes['Die Accident']:
+        if self.genes['Premature Die']:
             if self.age == self.year_accident:
                 self.alive = False
 
