@@ -2,38 +2,38 @@
 
 ## Agent
 
-### Atributes:
+### Attributes:
 
 - id - Unique identifier
 - age
 - money
-- children - list with all children
-- dead_age - Maximum age that a agent will have
-- days_without_eat - Consequetive days without fill the basic needs. (If greater than 3, the person will die)
+- children - list of all children
+- dead_age - Maximum age that an agent will be
+- days_without_eat - Consecutive days without meeting basic needs. (If greater than 3 the person will die)
 - alive - True if person alive, False otherwise
-- genes - Dictionary with characteristics that are select at random, in born:
-  - study - If True Person will study after legal age
-  - spend money - Percentage of money that the person will spend in other needs than the basic
+- genes - Dictionary with characteristics that are randomly selected at birth:
+  - study - If True Person is going to study after legal age
+  - spend money - Percentage of money the person will spend on needs other than basic
   - baby - If True person will have children
   - premature die - If True person will die before 'dead_age'
-  - invest - If True person will invest some percentage of this money
-- invest_percentage - percentage of money that a person will invest each year. Sampled from uniform distribution between 0.05 and 0.2
-- years_to_give_birth - Years at person will give birth. Sampled from a geometric distribution.
-- year_premature_die - Year that a person will die prematurely. Sampled from a normal distribution with mean:30 and std 25
+  - invest - If True, the person will invest some percentage of their money
+- invest_percentage - percentage of the money a person will invest each year. Sampled from uniform distribution between 0.05 and 0.2
+- years_to_give_birth - Years in which the person will give birth. Sampled from a geometric distribution.
+- year_premature_death - Year in which a person will die prematurely. Sampled from a normal distribution with mean: 30 and std 25
 
 ### Methods
 
-- have_money - Check if person have money to spend.
-- work - If person have more than legal age and don't study, increase this money by the SALARY, define in settings. If person study and have more than the age needed for work, increase this money by SALARY\*STUDY_COMPENSATION_GAIN (STUDY_COMPENSATION_GAIN >= 1)
+- have_money - Check if the person has money to spend.
+- work - If the person is over the legal age and does not study, increase this money by SALARY, define in the settings. If the person studies and is older than the age necessary to work, increase this money by SALARY \* STUDY_COMPENSATION_GAIN (STUDY_COMPENSATION_GAIN> = 1)
 
-- basic_needs - Remove from person money the money needed for basic needs for survive
+- basic_needs - Take from the person's money the money needed for basic survival needs
 
-- other_needs - If person works, remove from person money the amount spended in other needs than the basic, value calculated based on person genes.
+- other_needs - If the person works, it takes from the person's money the amount spent on needs other than basic needs, calculated based on the person's genes.
 
-- feed_children - If have children and they don't work, increase ther money with FEED_CHILD, defined in settings
+- feed_children - If a Person have children and they don't work, raise their money with FEED_CHILD, defined in the settings
 
-- invest - If person work and have in ther genes the gene to invest, increase is money by the amount defined by INTEREST_RATE and the percenge of money invested
+- invest - If the person works and has the gene to invest in his genes, Increase his money by the value defined by INTEREST_RATE _ invest_percentage _ money
 
-- make_baby - If person have the gene baby create a person and add it to world population, and children list
+- make_baby - If the person has the baby gene, create a person and add them to the world population and children list
 
-- dead - Check if person arrive to the age of deying or have 3 days at lest witout providing the basic needs, if true change is alive state to False and give his money to ther chindren evenly.
+- dead - Check if the person reaches the dead_age/year_premature_death or has at least 3 days without meeting basic needs, if True gives his money to children, equally distributed and change alive state to False.
