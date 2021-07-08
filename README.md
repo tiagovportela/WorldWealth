@@ -15,7 +15,7 @@
   - study - If True Person is going to study after legal age
   - spend money - Percentage of money the person will spend on needs other than basic
   - baby - If True person will have children
-  - premature die - If True person will die before 'dead_age'
+  - premature death - If True person will die before 'dead_age'
   - invest - If True, the person will invest some percentage of their money
 - invest_percentage - percentage of the money a person will invest each year. Sampled from uniform distribution between 0.05 and 0.2
 - years_to_give_birth - Years in which the person will give birth. Sampled from a geometric distribution.
@@ -32,7 +32,7 @@
 
 - feed_children - If a Person have children and they don't work, raise their money with FEED_CHILD, defined in the settings
 
-- invest - If the person works and has the gene to invest in his genes, Increase his money by the value defined by INTEREST_RATE _ invest_percentage _ money
+- invest - If the person works and has the gene to invest in his genes, Increase his money by the value defined by INTEREST*RATE * invest*percentage * money
 
 - make_baby - If the person has the baby gene, create a person and add them to the world population and children list
 
