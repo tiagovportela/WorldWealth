@@ -63,7 +63,12 @@ class Person:
                 self.days_without_basic_needs += 1
 
     def other_needs(self) -> None:
-        amount = self.DNA[S_MONEY]*YEAR_INCOME
+        amount = self.DNA[S_MONEY] * \
+            amount_to_spend_on_other_needs(self.money, len(self.children))
+        amount += VAT_TAX*amount
+
+        self.state.money += VAT_TAX*amount
+
         if self.working and self.have_money(amount):
             self.money -= amount
 

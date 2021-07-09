@@ -1,11 +1,10 @@
 import numpy as np
 import csv
-import multiprocessing
 import pandas as pd
-import jinja2
 
 from .person import Person
 from .state import State
+from .helpers import save_person_data
 
 
 class World:
@@ -58,12 +57,7 @@ class World:
             self.population.remove(person)
             self.dead_population.append(person)
 
-        with open('./population.csv', mode='a') as population_file:
-            population_writer = csv.writer(
-                population_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-            population_writer.writerow(
-                [person.id, person.age, person.money, len(person.children), self.current_year])
+        save_person_data(person, self.current_year)
 
     def run(self):
         # self.create_world()

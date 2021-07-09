@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 
 from .constants import *
 from .parameters import *
@@ -82,3 +83,43 @@ def death_age():
         if value > min_age and value < max_age:
             age.append(value)
     return age[0]
+
+
+def amount_to_spend_on_other_needs(money, number_children):
+
+    first = WEALTH_RANKS['FIRST']
+    second = WEALTH_RANKS['SECOND']
+    third = WEALTH_RANKS['THIRD']
+    fourth = WEALTH_RANKS['FOURTH']
+    fifth = WEALTH_RANKS['FIFTH']
+
+    base_amout = number_children*FEED_CHILD + BASIC_NEEDS_ADULT
+
+    if money >= first[0]*base_amout and money < first[1]*base_amout:
+        return YEAR_INCOME*first[2]
+    elif money >= second[0]*base_amout and money < second[1]*base_amout:
+        return YEAR_INCOME*second[2]
+    elif money >= third[0]*base_amout and money < third[1]*base_amout:
+        return YEAR_INCOME*third[2]
+    elif money >= fourth[0]*base_amout and money < fourth[1]*base_amout:
+        return YEAR_INCOME*fourth[2]
+    elif money >= fifth[0]:
+        return YEAR_INCOME*fifth[2]
+    else:
+        return YEAR_INCOME
+
+
+def save_person_data(person, year):
+    with open('./people.csv', mode='a') as population_file:
+        population_writer = csv.writer(
+            population_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        population_writer.writerow(
+            [
+                person.id,
+                person.age,
+                person.money,
+                len(person.children),
+                person.days_without_basic_needs,
+                year
+            ])

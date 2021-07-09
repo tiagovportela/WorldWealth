@@ -10,8 +10,8 @@ class State:
 
         self.allow_heritage = allow_heritage
         self.wealth_distribution = wealth_distribution
-        self.population = []
 
+        self.population = []
         self.money = 0
 
     def collect_taxes(self, person):
@@ -29,3 +29,5 @@ class State:
             if person.working:
                 person.money += value_to_distribute
                 self.money -= value_to_distribute
+
+    # def state_expenses(self):
