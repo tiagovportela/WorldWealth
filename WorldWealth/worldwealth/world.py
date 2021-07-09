@@ -1,17 +1,28 @@
 import numpy as np
 import csv
 import multiprocessing
+import pandas as pd
+import jinja2
 
 from .person import Person
 from .state import State
 
 
 class World:
-    def __init__(self, name, initial_population, years_until_extintion) -> None:
-        self.name = name
+    def __init__(self,
+                 name,
+                 initial_population,
+                 years_until_extintion,
+                 allow_heritage,
+                 wealth_distribution
 
+                 ) -> None:
+        self.name = name
         self.initial_population = initial_population
         self.years_until_extintion = years_until_extintion
+
+        #self.allow_heritage = allow_heritage
+        #self.wealth_distribution = wealth_distribution
 
         self.current_year = 0
 
@@ -19,8 +30,8 @@ class World:
         self.dead_population = []
 
         self.state = State(
-            allow_heritage=True,
-            wealth_distribution=False
+            allow_heritage=allow_heritage,
+            wealth_distribution=wealth_distribution
         )
 
     def create_world(self):
@@ -53,7 +64,6 @@ class World:
 
             population_writer.writerow(
                 [person.id, person.age, person.money, len(person.children), self.current_year])
-        #print(' END Processing!')
 
     def run(self):
         # self.create_world()
@@ -62,8 +72,13 @@ class World:
 
             self.state.population = self.population
             #pool_obj = multiprocessing.Pool()
-
             #pool_obj.map(self.process_person_life_year, self.population)
+            with open('./state.csv', mode='a') as state_file:
+                state_writer = csv.writer(
+                    state_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+                state_writer.writerow(
+                    [self.state.money, self.current_year])
 
             for person in self.population:
                 self.state.distribute_wealth(person)

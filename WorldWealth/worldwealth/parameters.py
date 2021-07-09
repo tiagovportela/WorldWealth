@@ -39,18 +39,18 @@ STD_DEATH = 20
 DEATH_RANGE = (0, 100)
 
 # Miminum money earn by working
-SALARY = 10_000
+YEAR_INCOME = 30_000
 # Compensation for study, value must be greater or equal to 1
 STUDY_COMPENSATION_GAIN = 1.3
 
 # Amount of money need for meet the basic needs of adult person
-BASIC_NEEDS_ADULT = 0.1*SALARY
+BASIC_NEEDS_ADULT = 0.1*YEAR_INCOME
 
 # Amount of money need for meet the basic needs of child
-BASIC_NEEDS_CHILD = 0.05*SALARY
+BASIC_NEEDS_CHILD = 0.05*YEAR_INCOME
 
 # Amount that a parent give to her child
-FEED_CHILD = 0.1*SALARY
+FEED_CHILD = 0.1*YEAR_INCOME
 
 WORKING_AGE = 27
 RETIREMENT_AGE = 65
@@ -65,3 +65,6 @@ MAX_DAYS_WITHOUT_BASIC_NEEDS = 3
 # ------------ STATE PARAMETERS ------------#
 
 BASE_TAX = 0.03
+
+# When money go to state,
+STATE_EFFIENCY = 0.80

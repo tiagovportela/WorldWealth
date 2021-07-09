@@ -11,3 +11,9 @@ INVEST = 'INVEST'
 
 # This gene define the percentage of money that a person will spend in other needs than the basic
 S_MONEY = 'S_MONEY'
+
+
+# causes of death
+NATURAL = 'NATURAL'
+PREMATURE = 'PREMATURE'
+CANT_PROVED_BASIC_NEEDS = 'CANT_PROVED_BASIC_NEEDS'

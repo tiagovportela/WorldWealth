@@ -32,6 +32,7 @@ class Person:
         self.percentage_money_invest = percentage_money_person_will_invest()
         self.children_birth_age = children_birth_age()
         self.age_premature_death = age_premature_death()
+        self.cause_of_death = None
 
     # check if have the amount to spend
     def have_money(self, amount) -> bool:
@@ -43,9 +44,9 @@ class Person:
     def work(self) -> None:
         if self.working:
             if self.DNA[STUDY]:
-                self.money += STUDY_COMPENSATION_GAIN*SALARY
+                self.money += STUDY_COMPENSATION_GAIN*YEAR_INCOME
             else:
-                self.money += SALARY
+                self.money += YEAR_INCOME
 
     def meet_basic_needs(self) -> None:
         if self.age >= LEGAL_AGE:
@@ -62,7 +63,7 @@ class Person:
                 self.days_without_basic_needs += 1
 
     def other_needs(self) -> None:
-        amount = self.DNA[S_MONEY]*SALARY
+        amount = self.DNA[S_MONEY]*YEAR_INCOME
         if self.working and self.have_money(amount):
             self.money -= amount
 
@@ -85,18 +86,20 @@ class Person:
                 self.children.append(baby)
                 population.append(baby)
 
-    # kill a person and distibute his wealth for crildren.
+    # kill a person and distibute his wealth for crildren
+    #  or give than to state.
     def die(self) -> None:
-        try:
+
+        if len(self.children) > 0:
             heritage_value = self.money / len(self.children)
-        except:
+        else:
             heritage_value = 0
 
         if self.state.allow_heritage:
             for child in self.children:
                 child.money += heritage_value
         else:
-            self.state.money += heritage_value
+            self.state.money += STATE_EFFIENCY * heritage_value
 
         self.alive = False
 
@@ -104,12 +107,15 @@ class Person:
 
         if self.age == self.death_age:
             self.die()
+            self.cause_of_death = NATURAL
 
         if self.DNA[P_DEATH]:
             if self.age == self.age_premature_death:
                 self.die()
+                self.cause_of_death = PREMATURE
         if self.days_without_basic_needs >= MAX_DAYS_WITHOUT_BASIC_NEEDS:
             self.die()
+            self.cause_of_death = CANT_PROVED_BASIC_NEEDS
 
     def working_state(self) -> None:
         if self.age <= RETIREMENT_AGE:
