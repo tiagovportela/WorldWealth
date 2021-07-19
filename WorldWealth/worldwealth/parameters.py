@@ -3,16 +3,18 @@
 # GENE dominance probablity
 
 PROBABILITY_STUDY = [0.2, 0.8]
-PROBABILITY_HAVE_CHILDREN = [0.5, 0.5]
+PROBABILITY_HAVE_CHILDREN = [0.65, 0.35]
 PROBABILITY_P_DEATH = [0.01, 0.99]
 PROBABILITY_INVEST = [1.0, 0.0]
+PROBABILITY_WORK_SECTOR = [0.3, 0.6, 0.1]
 #SPEND_MONEY_PERCENTAGE = [0.05, 0.2, 0.7, 0.9]
 SPEND_MONEY_PERCENTAGE = [0.05, 0.5, 0.9]
 
+
 # Parameters for calculate number of children
 # sample from a normal distribution
-MEAN_CHILDREN = 8
-STD_CHILDREN = 1
+MEAN_CHILDREN = 3
+STD_CHILDREN = 2
 
 # FERTILE YEARS RANGE
 FERTILE_YEARS = (16, 45)
@@ -72,7 +74,7 @@ STATE_EFFIENCY = 0.1
 
 VAT_TAX = 0.15
 
-
+IRC_TAX = 0.35
 # Disponibilit for spend money defined by a tutle
 # first element is lower limit, second higher limit
 # third is the gain
@@ -84,3 +86,14 @@ WEALTH_RANKS = {
     'FOURTH': (9, 10, 1.7),
     'FIFTH': (11, '-', 2.3)
 }
+
+#-------------------------------------------#
+# ------------ COMPANIES PARAMETERS ------------#
+
+VALUE_ADD = 6.5
+# RESOURCES_TO_MAKE_A_PRODUCT =
+NUMBER_PRODUTS_MADE_BY_EMPLOYEE = 3
+
+#-------------------------------------------#
+# ------------ WORLD PARAMETERS ------------#
+BASE_RESOURCES = 500

@@ -20,6 +20,7 @@ class Person:
         self.alive = True
         self.working = False
         self.days_without_basic_needs = 0
+        self.working_sector = None
 
         self.DNA = {
             STUDY: gene(STUDY),
@@ -34,35 +35,48 @@ class Person:
         self.age_premature_death = age_premature_death()
         self.cause_of_death = None
 
+        self.hired = False
+
     # check if have the amount to spend
+
     def have_money(self, amount) -> bool:
         if self.money > amount:
             return True
         else:
             False
 
-    def work(self) -> None:
+    def work(self, company) -> None:
         if self.working:
             if self.DNA[STUDY]:
-                self.money += STUDY_COMPENSATION_GAIN*YEAR_INCOME
-            else:
-                self.money += YEAR_INCOME
+                wage = STUDY_COMPENSATION_GAIN*YEAR_INCOME
+                if company.pay_wage(wage):
+                    self.money += wage
 
-    def meet_basic_needs(self) -> None:
+            else:
+                if company.pay_wage(YEAR_INCOME):
+                    self.money += YEAR_INCOME
+
+    def meet_basic_needs(self, company) -> None:
         if self.age >= LEGAL_AGE:
             if self.have_money(BASIC_NEEDS_ADULT):
-                self.money -= BASIC_NEEDS_ADULT
-                self.days_without_basic_needs = 0
+                if company.sell_goods(BASIC_NEEDS_ADULT):
+                    self.money -= BASIC_NEEDS_ADULT
+                    self.days_without_basic_needs = 0
+                else:
+                    self.days_without_basic_needs += 1
             else:
                 self.days_without_basic_needs += 1
         else:
             if self.have_money(BASIC_NEEDS_CHILD):
-                self.money -= BASIC_NEEDS_CHILD
-                self.days_without_basic_needs = 0
+                if company.sell_goods(BASIC_NEEDS_CHILD):
+                    self.money -= BASIC_NEEDS_CHILD
+                    self.days_without_basic_needs = 0
+                else:
+                    self.days_without_basic_needs += 1
             else:
                 self.days_without_basic_needs += 1
 
-    def other_needs(self) -> None:
+    def other_needs(self, company) -> None:
         amount = self.DNA[S_MONEY] * \
             amount_to_spend_on_other_needs(self.money, len(self.children))
         amount += VAT_TAX*amount
@@ -71,6 +85,7 @@ class Person:
 
         if self.working and self.have_money(amount):
             self.money -= amount
+            company.sell_goods(amount)
 
     def feed_children(self) -> None:
         for child in self.children:
@@ -82,7 +97,8 @@ class Person:
     def invest(self) -> None:
         if self.DNA[INVEST]:
             if self.working:
-                self.money += INTEREST_RATE*self.percentage_money_invest*self.money
+                self.money += INTEREST_RATE*self.percentage_money_invest \
+                    * self.money
 
     def make_baby(self, population) -> None:
         if self.DNA[BABY]:
@@ -127,8 +143,10 @@ class Person:
             if self.DNA[STUDY]:
                 if self.age >= WORKING_AGE:
                     self.working = True
+                    self.working_sector = choose_work_sector()
             else:
                 if self.age >= LEGAL_AGE:
                     self.working = True
+                    self.working_sector = choose_work_sector()
         else:
             self.working = False

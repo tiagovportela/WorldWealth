@@ -1,21 +1,37 @@
 import numpy as np
+import random
 import csv
 
 from .constants import *
 from .parameters import *
+
+np.random.seed(1)
 
 # function that return the values for the genes
 
 
 def gene(type):
     if type == STUDY:
-        return np.random.choice(a=[True, False], p=PROBABILITY_STUDY)
+        return random.choices([True, False],
+                              weights=PROBABILITY_STUDY,
+                              k=1
+                              )[0]
+
     elif type == BABY:
-        return np.random.choice(a=[True, False], p=PROBABILITY_HAVE_CHILDREN)
+        return random.choices([True, False],
+                              weights=PROBABILITY_HAVE_CHILDREN,
+                              k=1
+                              )[0]
+
     elif type == P_DEATH:
-        return np.random.choice(a=[True, False], p=PROBABILITY_P_DEATH)
+        return random.choices([True, False],
+                              weights=PROBABILITY_P_DEATH,
+                              k=1
+                              )[0]
     elif type == INVEST:
-        return np.random.choice(a=[True, False], p=PROBABILITY_INVEST)
+        return random.choices([True, False], weights=PROBABILITY_INVEST,
+                              k=1
+                              )[0]
     elif type == S_MONEY:
         return np.random.choice(SPEND_MONEY_PERCENTAGE)
 
@@ -107,6 +123,39 @@ def amount_to_spend_on_other_needs(money, number_children):
         return YEAR_INCOME*fifth[2]
     else:
         return YEAR_INCOME
+
+
+def choose_work_sector():
+    return np.random.choice(
+        a=[PRIMARY, SECONDARY, TERTIARY],
+        p=PROBABILITY_WORK_SECTOR
+    )
+
+
+def save_company_data(company, year):
+    with open('./company.csv', mode='a') as state_file:
+        state_writer = csv.writer(
+            state_file,
+            delimiter=',',
+            quotechar='"',
+            quoting=csv.QUOTE_MINIMAL
+        )
+
+        state_writer.writerow(
+            [company.money, company.goods, len(company.employees), year])
+
+
+def save_state_data(state, year):
+    with open('./state.csv', mode='a') as state_file:
+        state_writer = csv.writer(
+            state_file,
+            delimiter=',',
+            quotechar='"',
+            quoting=csv.QUOTE_MINIMAL
+        )
+
+        state_writer.writerow(
+            [state.money, year])
 
 
 def save_person_data(person, year):
