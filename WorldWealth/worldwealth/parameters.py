@@ -75,7 +75,7 @@ STATE_EFFIENCY = 0.1
 VAT_TAX = 0.15
 
 IRC_TAX = 0.35
-# Disponibilit for spend money defined by a tutle
+# Disponibility for spend money defined by a tutle
 # first element is lower limit, second higher limit
 # third is the gain
 
