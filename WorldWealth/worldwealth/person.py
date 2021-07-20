@@ -7,6 +7,49 @@ from .helpers import *
 
 
 class Person:
+    """
+    A class to represent a person.
+
+    ...
+
+    Attributes
+    ----------
+    id : str
+        id of the person
+    age : int
+        age of the person
+    money : float
+        money of the person
+    death_age : int
+        age that a person will die
+    children : list
+        children that a person have
+    alive : bool
+        atribute that indicates if a person is alive
+    working : bool
+        atribute that indicates if a person is working
+    days_without_basic_needs : int
+        how many years a person is alive without providing basic needs 
+    working_sector : str
+        setor for that person work
+    DNA : dict
+        Dict with genetic information
+    percentage_money_invest : float
+        percentage of money that a person will invest 
+    age_premature_death : int
+        age that a person will die prematurely
+    children_birth_age : list
+        ages that a person will give to birth
+    cause_of_death : str
+        cause of person dead
+    hired : bool
+        atribute that indicates if a person is hired by company
+
+    Methods
+    -------
+
+    """
+
     def __init__(self, state) -> None:
 
         self.state = state

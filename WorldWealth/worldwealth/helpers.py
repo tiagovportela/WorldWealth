@@ -7,10 +7,18 @@ from .parameters import *
 
 np.random.seed(1)
 
-# function that return the values for the genes
-
 
 def gene(type):
+    '''
+    Return the values for the genes
+
+        Parameters:
+            (string) type: type of gene
+
+        Returns
+            (bool) Returns a bool indicating if gene is active
+
+    '''
     if type == STUDY:
         return random.choices([True, False],
                               weights=PROBABILITY_STUDY,
@@ -35,26 +43,47 @@ def gene(type):
     elif type == S_MONEY:
         return np.random.choice(SPEND_MONEY_PERCENTAGE)
 
-# return percentage of money that a person will invest
-# sampled from a uniform distribution
-
 
 def percentage_money_person_will_invest():
-    return np.random.uniform(0.05, 0.2, size=1)[0]
+    '''
+    Return percentage of money that a person will invest.
+    Sampled from a uniform distribution
 
-# function that return the number of children that a person will have
-# sample from normal distribution
+        Parameters:
+            None
+
+        Returns
+            (float) Returns a float with percentage of money that a person
+            will invest
+
+    '''
+    return np.random.uniform(0.05, 0.2, size=1)[0]
 
 
 def number_of_children_person_will_have():
-    return abs(int(np.random.normal(MEAN_CHILDREN, STD_CHILDREN)))
+    '''
+    Return the number of children that a person will have.
+    Sample from normal distribution.
+    Used in children_birth_age()
 
-# function that return the age at a person will give birth to the children
-# Sample ages from normal distribution
+        Parameters:
+            None
+        Retuns
+            (int): number of children that a person will have
+    '''
+    return abs(int(np.random.normal(MEAN_CHILDREN, STD_CHILDREN)))
 
 
 def children_birth_age():
+    '''
+    Return the ages at a person will give birth to the children.
+    Sample from normal distribution.
 
+        Parameters:
+            None
+        Retuns
+            (list): list with ages that a person will give birth
+    '''
     ages = []
     min_age, max_age = FERTILE_YEARS
     number_of_children = number_of_children_person_will_have()
@@ -73,11 +102,17 @@ def children_birth_age():
                 ages.append(age)
     return ages
 
-# Function that return the age of premature death.
-# Age sample from a normal distribution
-
 
 def age_premature_death():
+    '''
+    Return the age of premature death.
+    Sample from normal distribution.
+
+        Parameters:
+            None
+        Retuns
+            (int) age: age of premature death
+    '''
     age = []
     min_age, max_age = P_DEATH_RANGE
     while(len(age) < 1):
@@ -91,6 +126,15 @@ def age_premature_death():
 
 
 def death_age():
+    '''
+    Return the age of death.
+    Sample from normal distribution.
+
+        Parameters:
+            None
+        Retuns
+            (int) age: age of death
+    '''
     age = []
     min_age, max_age = DEATH_RANGE
     while(len(age) < 1):
@@ -102,6 +146,18 @@ def death_age():
 
 
 def amount_to_spend_on_other_needs(money, number_children):
+    '''
+    Returns the money spent in other needs than the basics
+    For that is calculate the base_amount that is used for calculate the rank
+    of wealth (Disponibility for spend mone)
+
+        Parameters:
+            (float) money: money that a person have
+            (int) number of children that a person have
+
+        Return:
+            (float): money spent
+    '''
 
     first = WEALTH_RANKS['FIRST']
     second = WEALTH_RANKS['SECOND']
@@ -161,7 +217,11 @@ def save_state_data(state, year):
 def save_person_data(person, year):
     with open('./people.csv', mode='a') as population_file:
         population_writer = csv.writer(
-            population_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            population_file,
+            delimiter=',',
+            quotechar='"',
+            quoting=csv.QUOTE_MINIMAL
+        )
 
         population_writer.writerow(
             [
