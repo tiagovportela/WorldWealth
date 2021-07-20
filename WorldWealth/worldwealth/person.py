@@ -14,6 +14,8 @@ class Person:
 
     Attributes
     ----------
+    state: object
+        state that a person belongs to. 
     id : str
         id of the person
     age : int
